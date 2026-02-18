@@ -1,7 +1,10 @@
 #container{
   background-color: lightcoral;
   padding: 5px;
-  border-radius: 10px
+  border-radius: 10px;
+  height: fit-content;
+  flex-wrap: wrap;
+  display:flex;
 }
 .card{
   color:yellow;
