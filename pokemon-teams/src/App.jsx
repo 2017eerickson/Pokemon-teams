@@ -36,8 +36,8 @@ function App() {
           { 
               pokeData.map((pokemon) => (
               <div id = "card">
-                <h3>{pokemon.name}</h3>
-                <img src = {pokemon.sprites.front_shiny}></img>
+                <h3>{pokemon.data.name}</h3>
+                <img src = {pokemon.data.sprites.front_shiny}></img>
               </div>
           ))
           }
