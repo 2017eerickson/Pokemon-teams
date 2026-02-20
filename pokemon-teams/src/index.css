@@ -1,14 +1,15 @@
 #container{
   background-color: lightcoral;
+  height: 100px;
   padding: 5px;
   border-radius: 10px;
   height: fit-content;
   flex-wrap: wrap;
   display:flex;
 }
-.card{
+#card{
   color:yellow;
-  background-color : lightblue;
+  background-color : rgb(17, 145, 188);
   height: 40vmin;
   width:25vmin;
   border-radius : 5vmin;

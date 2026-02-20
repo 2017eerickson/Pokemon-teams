@@ -1,45 +1,46 @@
 import './App.css'
+import { useState } from 'react';
 import axios from  "axios";
 
 function App() {
+  const [pokeName,setPokeName]= useState('')
+  const [pokeData,setPokeData] = useState()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    let formData = new FormData(event.target)
-    let jsonData = Object.fromEntries(formData)
-    let name = jsonData["name"]
-    return fetchData(name)
+    fetchData()
 
   }
-  const fetchData = async (name) => {
-    let url = `https://pokeapi.co/api/v2/pokemon/${name}`
-    let response = await axios.get(url)
-    let pokeName = response.data.name
-    let img = response.data.sprites.front_shiny
-    createCard(pokeName,img)
+  const fetchData = async () => {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
+    setPokeData( await axios.get(url))
+  
   }
 
-  const createCard = (name, url) => {
-    let container = document.getElementById("container")
-    let div = document.createElement("div")
-    let h4 = document.createElement("h4")
-    let img = document.createElement("img")
-    div.className ="card"
-    img.src = url
-    h4.innerText = name
-    div.appendChild(h4)
-    div.appendChild(img)
-    container.appendChild(div)
-  }
 
   return (
     <>
       <h1>Pokemon Teams Assemble !</h1>
       <form onSubmit={()=> handleSubmit(event)}>
-        <input type="text" name = "name"/>
-        <input type= "submit" />
+        <input 
+        type="text" 
+        name = "name"
+        placeholder = "pikachu"
+        value={pokeName}
+        onChange = {(evt) => setPokeName(evt.target.value)}
+        />
+        <input type= "submit"/> 
       </form>
-      <div id= "container">
+        <div id= "container">
+        {console.log(pokeData)}
+          { 
+              pokeData.map((pokemon) => (
+              <div id = "card">
+                <h3>{pokemon.name}</h3>
+                <img src = {pokemon.sprites.front_shiny}></img>
+              </div>
+          ))
+          }
         
       </div>
 
