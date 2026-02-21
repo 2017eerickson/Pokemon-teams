@@ -1,10 +1,10 @@
 import './App.css'
 import { useState } from 'react';
-import axios from  "axios";
 import { useEffect } from 'react';
+import PokeCard from './assets/components/PokeCard';
+import UserInput from './assets/components/UserInput';
 
 function App() {
-  const [pokeName, setPokeName]= useState("pikachu")
   const [pokeData, setPokeData] = useState([])
 
   useEffect(() => {
@@ -13,41 +13,30 @@ function App() {
 
   const addData = (data)=>{
     setPokeData([...pokeData,data])
-    console.log(pokeData)
   }
 
-  const fetchData = async () => {
-      let url = `https://pokeapi.co/api/v2/pokemon/${pokeName}`
-      let response = await axios.get(url)
-      addData(response.data)
-    }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    fetchData()
-    }
+  const rmData = (id) => {
+    setPokeData(
+      pokeData.filter((pokemon)=>(
+      pokemon.id != id
+      )))
+    console.log(pokeData)
+  }
     
 
   return (
     <>
       <h1>Pokemon Teams Assemble !</h1>
-      <form onSubmit={()=> handleSubmit(event)}>
-        <input 
-        type="text" 
-        name = "name"
-        placeholder = "enter pokemon name"
-        value={pokeName}
-        onChange = {(evt) => setPokeName(evt.target.value)}
-        />
-        <input type= "submit"/> 
-      </form>
+      <UserInput
+        addData={addData}
+      />
         <div id= "container">
           { 
             pokeData.map((pokemon) => (
-            <div id = "card">
-              <h3>{pokemon.name}</h3>
-              <img src = {pokemon.sprites.front_shiny}></img>
-            </div>
+              <PokeCard
+                pokemon = {pokemon}
+                rmData = {rmData}
+              />
           ))
           }
         
